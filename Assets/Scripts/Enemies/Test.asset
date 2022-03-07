@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   fireRate: 1
-  spread: 1
-  ammo: 10
-  reloadTime: 2
+  spread: 0
   bullet: {fileID: 7357823540866346744, guid: bddef0b632fec21429cdc498782ff4c8, type: 3}
   speed: 5

@@ -18,11 +18,6 @@ public class Weapon : ScriptableObject
     [SerializeField, Range(0, 1)]
     private float spread = 0.5f;
 
-    [SerializeField]
-    private int ammo = 10;
-    [SerializeField]
-    private float reloadTime = 2;
-
     public GameObject bullet;
     [SerializeField]
     private float speed = 10;

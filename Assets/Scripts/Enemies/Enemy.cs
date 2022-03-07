@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
 
     [SerializeField]
+    private Weapon weapon;
+
+    [SerializeField]
     private float speed = 1;
     [SerializeField]
     private float sightDistance = 10;
@@ -19,6 +22,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float raycastDelay = .1f;
     private float raycastTimer = 0;
+
+    private bool shooting = false;
+    private float shotTimer;
 
     private void Awake()
     {
@@ -34,16 +40,17 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (shooting)
+        {
+            Shoot();
+        }
+
         raycastTimer += Time.deltaTime;
         if(raycastTimer > raycastDelay)
         {
             raycastTimer = 0;
-
-            if (IsPlayerVisible())
-            {
-                Shoot();
-            }
-            else
+            shooting = IsPlayerVisible();
+            if (!shooting)
             {
                 PathTowardsPlayer();
             }
@@ -65,7 +72,17 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
+        if (agent.hasPath)
+        {
+            agent.ResetPath();
+        }
 
+        shotTimer += Time.deltaTime;
+        if(shotTimer > weapon.FireDelay)
+        {
+            shotTimer = 0;
+            weapon.FireBullet(transform.position, GetDirectionToPlayer());
+        }
     }
 
     private void PathTowardsPlayer()
@@ -74,6 +91,7 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
+        shotTimer = 0;
         agent.SetDestination(player.position);
     }
 
