@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Weapon")]
 public class Weapon : ScriptableObject
 {
+    public ColourMaterial colour;
+
     [SerializeField]
     private float fireRate = 1;
     public float FireDelay
@@ -24,7 +26,7 @@ public class Weapon : ScriptableObject
     [SerializeField]
     private float speed = 10;
     [SerializeField]
-    private float lifeTime = 5;
+    private float lifetime = 5;
 
     public void FireBullet(Vector3 _position, Vector3 _direction)
     {
@@ -40,6 +42,7 @@ public class Weapon : ScriptableObject
 
         Bullet newBullet = Instantiate(bullet, _position, Quaternion.LookRotation(direction)).GetComponent<Bullet>();
         newBullet.Speed = speed;
-        newBullet.Lifetime = lifeTime;
+        newBullet.Lifetime = lifetime;
+        newBullet.Colour = colour;
     }
 }

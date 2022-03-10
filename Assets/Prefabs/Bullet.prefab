@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4903877074503063388}
   - component: {fileID: 9184159938988440823}
   m_Layer: 22
-  m_Name: Sphere
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,3 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da32beaeb6298d4fae751f109aa4422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ColourMaterial:
+    colour: 0
+    material: {fileID: 0}

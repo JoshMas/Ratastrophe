@@ -30,6 +30,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    public ColourMaterial Colour;
+
+    private void Start()
+    {
+        GetComponentInChildren<MeshRenderer>().material = Colour.material;
+    }
+
     private void Update()
     {
         transform.Translate(speed * Time.deltaTime * Vector3.forward, Space.Self);
@@ -48,7 +55,11 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            //check enemy colour, do damage if it matches
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy.ColourMatches(Colour.colour))
+            {
+                enemy.TakeDamage();
+            }
         }
         Destroy(gameObject);
     }

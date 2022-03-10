@@ -34,8 +34,9 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     [SerializeField]
-    private ColourMaterial[] enemyTypes;
+    private GameObject[] enemyTypes;
 
+    private List<Transform> spawnPoints;
 
     private void Awake()
     {
@@ -45,7 +46,13 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        spawnPoints = new List<Transform>();
+        Transform[] children = GetComponentsInChildren<Transform>();
+        foreach(Transform child in children)
+        {
+            spawnPoints.Add(child);
+        }
+        spawnPoints.RemoveAt(0);
     }
 
     // Update is called once per frame
