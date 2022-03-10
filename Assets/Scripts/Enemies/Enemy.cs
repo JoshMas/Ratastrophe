@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(CapsuleCollider))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
 
@@ -26,9 +26,13 @@ public class Enemy : MonoBehaviour
     private bool shooting = false;
     private float shotTimer;
 
+    private LayerMask aimingMask;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = speed;
+        aimingMask = LayerMask.GetMask("Default");
     }
 
     // Start is called before the first frame update
@@ -44,21 +48,21 @@ public class Enemy : MonoBehaviour
         {
             Shoot();
         }
+        else
+        {
+            PathTowardsPlayer();
+        }
 
         raycastTimer += Time.deltaTime;
         if(raycastTimer > raycastDelay)
         {
             raycastTimer = 0;
             shooting = IsPlayerVisible();
-            if (!shooting)
-            {
-                PathTowardsPlayer();
-            }
         }
     }
     private bool IsPlayerVisible()
     {
-        if(!Physics.Raycast(transform.position, GetDirectionToPlayer(), out RaycastHit hit, sightDistance))
+        if(!Physics.Raycast(transform.position, GetDirectionToPlayer(), out RaycastHit hit, sightDistance, aimingMask, QueryTriggerInteraction.Collide))
         {
             return false;
         }
@@ -72,10 +76,7 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
-        if (agent.hasPath)
-        {
-            agent.ResetPath();
-        }
+        agent.ResetPath();
 
         shotTimer += Time.deltaTime;
         if(shotTimer > weapon.FireDelay)

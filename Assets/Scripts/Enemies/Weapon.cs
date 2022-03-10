@@ -18,21 +18,13 @@ public class Weapon : ScriptableObject
     [SerializeField, Range(0, 1)]
     private float spread = 0.5f;
 
-    public GameObject bullet;
+    [Header("Bullet Properties")]
+    [SerializeField]
+    private GameObject bullet;
     [SerializeField]
     private float speed = 10;
-
-    private void OnValidate()
-    {
-        if(bullet != null)
-        {
-            Bullet script = bullet.GetComponent<Bullet>();
-            if(script != null)
-            {
-                script.Speed = speed;
-            }
-        }
-    }
+    [SerializeField]
+    private float lifeTime = 5;
 
     public void FireBullet(Vector3 _position, Vector3 _direction)
     {
@@ -46,6 +38,8 @@ public class Weapon : ScriptableObject
             direction = direction.normalized;
         }
 
-        Instantiate(bullet, _position, Quaternion.Euler(direction));
+        Bullet newBullet = Instantiate(bullet, _position, Quaternion.LookRotation(direction)).GetComponent<Bullet>();
+        newBullet.Speed = speed;
+        newBullet.Lifetime = lifeTime;
     }
 }
