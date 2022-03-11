@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private ColourMaterial colour;
+    [SerializeField]
+    private Material materialToReplace;
 
     private NavMeshAgent agent;
 
@@ -38,6 +40,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
         aimingMask = LayerMask.GetMask("Default");
+        materialToReplace = colour.material;
     }
 
     // Start is called before the first frame update
@@ -81,18 +84,18 @@ public class Enemy : MonoBehaviour
 
     private Vector3 GetDirectionToPlayer()
     {
-        return transform.InverseTransformPoint(player.position).normalized;
+        return (player.position - transform.position).normalized;
     }
 
     private void Shoot()
     {
         agent.ResetPath();
-
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z), Vector3.up);
         shotTimer += Time.deltaTime;
         if(shotTimer > weapon.FireDelay)
         {
             shotTimer = 0;
-            weapon.FireBullet(transform.position, GetDirectionToPlayer());
+            weapon.FireBullet(transform.position + transform.forward, GetDirectionToPlayer());
         }
     }
 
@@ -103,7 +106,14 @@ public class Enemy : MonoBehaviour
             return;
         }
         shotTimer = 0;
-        agent.SetDestination(player.position);
+        StartCoroutine(nameof(DelayPath));
+    }
+
+    private IEnumerator DelayPath()
+    {
+        yield return new WaitForSeconds(Random.Range(0, 5));
+        if(!shooting)
+            agent.SetDestination(player.position);
     }
 
     public bool ColourMatches(CrystalColour _colour)

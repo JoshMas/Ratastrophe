@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Weapon")]
+[CreateAssetMenu(menuName ="ScriptableObjects/Weapon")]
 public class Weapon : ScriptableObject
 {
     public ColourMaterial colour;
