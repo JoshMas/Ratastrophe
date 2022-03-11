@@ -33,11 +33,14 @@ public class EnemyManager : MonoBehaviour
     }
     #endregion
 
+    public ColourMaterial[] colours;
+
     [SerializeField]
     private List<Wave> waves;
 
     private List<Transform> spawnPoints;
 
+    [HideInInspector]
     public List<GameObject> ActiveEnemies;
 
     private void Awake()
@@ -64,9 +67,23 @@ public class EnemyManager : MonoBehaviour
         {
             SpawnWave();
         }
+
+        Debug.Log(GetRandomMaterial(colours[0]).colour);
     }
 
+    public ColourMaterial GetRandomMaterial()
+    {
+        return colours[Random.Range(0, colours.Length)];
+    }
 
+    public ColourMaterial GetRandomMaterial(ColourMaterial _excluded)
+    {
+        ColourMaterial colMat = GetRandomMaterial();
+        if (colMat.colour == _excluded.colour)
+            return GetRandomMaterial(_excluded);
+        else
+            return colMat;
+    }
 
     private void SpawnWave()
     {

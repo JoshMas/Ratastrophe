@@ -6,8 +6,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
+    private ColourMaterial bodyColour;
+    private ColourMaterial weaponColour;
     [SerializeField]
-    private ColourMaterial colour;
+    private bool weaponColourMatches = true;
     [SerializeField]
     private MeshRenderer materialToReplace;
 
@@ -47,7 +49,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
-        materialToReplace.material = colour.material;
+        SetColour();
+        materialToReplace.material = bodyColour.material;
     }
 
     // Update is called once per frame
@@ -74,6 +77,20 @@ public class Enemy : MonoBehaviour
             shooting = IsPlayerVisible();
         }
     }
+
+    private void SetColour()
+    {
+        bodyColour = EnemyManager.Instance.GetRandomMaterial();
+        if (weaponColourMatches)
+        {
+            weaponColour = bodyColour;
+        }
+        else
+        {
+            weaponColour = EnemyManager.Instance.GetRandomMaterial(bodyColour);
+        }
+    }
+
     private bool IsPlayerVisible()
     {
         if(!Physics.Raycast(transform.position, GetDirectionToPlayer(), out RaycastHit hit, sightDistance, aimingMask, QueryTriggerInteraction.Collide))
@@ -96,7 +113,7 @@ public class Enemy : MonoBehaviour
         if(shotTimer > weapon.FireDelay)
         {
             shotTimer = 0;
-            weapon.FireBullet(transform.position + transform.forward, GetDirectionToPlayer());
+            weapon.FireBullet(transform.position + transform.forward, GetDirectionToPlayer(), weaponColour);
         }
     }
 
@@ -123,7 +140,7 @@ public class Enemy : MonoBehaviour
 
     public bool ColourMatches(CrystalColour _colour)
     {
-        return _colour == colour.colour;
+        return _colour == bodyColour.colour;
     }
 
     public void TakeDamage()

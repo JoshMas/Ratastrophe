@@ -149,9 +149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5301f0fa3e3830b469416425316849fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colour:
-    colour: 1
-    material: {fileID: 2100000, guid: 4b22ce33642e2fc44816c53b09336129, type: 2}
+  bodyColour:
+    colour: 0
+    material: {fileID: 2100000, guid: b67123ef6315ee64d81b4697f73094d0, type: 2}
+  weaponColour:
+    colour: 0
+    material: {fileID: 0}
   materialToReplace: {fileID: 4050587075016236994}
   health: 1
   speed: 5

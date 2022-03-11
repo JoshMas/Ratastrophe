@@ -4438,6 +4438,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b09b2e413b098f4a9a258c916bbbb6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colours:
+  - colour: 0
+    material: {fileID: 2100000, guid: b67123ef6315ee64d81b4697f73094d0, type: 2}
+  - colour: 1
+    material: {fileID: 2100000, guid: 4b22ce33642e2fc44816c53b09336129, type: 2}
+  - colour: 2
+    material: {fileID: 2100000, guid: b94d9107449cd95488777af2e54fd8ad, type: 2}
   waves:
   - {fileID: 11400000, guid: 3322b066f6fe3044892be88154e6b1e6, type: 2}
   - {fileID: 11400000, guid: 3322b066f6fe3044892be88154e6b1e6, type: 2}
