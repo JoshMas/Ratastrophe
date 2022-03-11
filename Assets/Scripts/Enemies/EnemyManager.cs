@@ -38,6 +38,8 @@ public class EnemyManager : MonoBehaviour
 
     private List<Transform> spawnPoints;
 
+    public List<Enemy> ActiveEnemies;
+
     private void Awake()
     {
         Singleton();
@@ -58,7 +60,10 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(ActiveEnemies.Count == 0)
+        {
+            SpawnWave();
+        }
     }
 
 
