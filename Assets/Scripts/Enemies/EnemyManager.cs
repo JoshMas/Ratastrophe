@@ -34,11 +34,11 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     [SerializeField]
-    private GameObject[] enemyTypes;
+    private List<Wave> waves;
 
     private List<Transform> spawnPoints;
 
-    public List<Enemy> ActiveEnemies;
+    public List<GameObject> ActiveEnemies;
 
     private void Awake()
     {
@@ -70,6 +70,30 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnWave()
     {
+        if(waves.Count == 0)
+        {
+            Win();
+            return;
+        }
 
+        int spawnNum = waves[0].GetRandomSpawnCount();
+
+        for (int i = 0; i < spawnNum; ++i)
+        {
+            ActiveEnemies.Add(Instantiate(waves[0].GetRandomEnemy(), GetRandomSpawn(), Quaternion.identity));
+        }
+
+        waves.RemoveAt(0);
+    }
+
+    private Vector3 GetRandomSpawn()
+    {
+        return spawnPoints[Random.Range(0, spawnPoints.Count)].position + Random.insideUnitSphere;
+    }
+
+    private void Win()
+    {
+        Debug.Log("a");
+        enabled = false;
     }
 }

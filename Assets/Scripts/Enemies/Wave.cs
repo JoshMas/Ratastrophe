@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyWeight
 {
     public GameObject enemy;
-    public int weight;
+    [Min(1)] public int weight;
 
     public void AddEnemies(ref List<GameObject> _list)
     {
@@ -30,6 +30,9 @@ public class Wave : ScriptableObject
 
     private void OnEnable()
     {
+        if (table == null)
+            return;
+
         enemies = new List<GameObject>();
         foreach(EnemyWeight pair in table)
         {

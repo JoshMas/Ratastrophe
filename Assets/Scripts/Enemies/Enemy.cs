@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private ColourMaterial colour;
     [SerializeField]
-    private Material materialToReplace;
+    private MeshRenderer materialToReplace;
 
     private NavMeshAgent agent;
 
@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 
     private bool shooting = false;
     private float shotTimer;
+    private bool waitingForPath = false;
 
     private LayerMask aimingMask;
 
@@ -40,13 +41,13 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
         aimingMask = LayerMask.GetMask("Default");
-        materialToReplace = colour.material;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
+        materialToReplace.material = colour.material;
     }
 
     // Update is called once per frame
@@ -101,7 +102,7 @@ public class Enemy : MonoBehaviour
 
     private void PathTowardsPlayer()
     {
-        if (agent.hasPath)
+        if (agent.hasPath || waitingForPath)
         {
             return;
         }
@@ -111,9 +112,13 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator DelayPath()
     {
+        waitingForPath = true;
         yield return new WaitForSeconds(Random.Range(0, 5));
-        if(!shooting)
+        if (!shooting)
+        {
             agent.SetDestination(player.position);
+            waitingForPath = false;
+        }
     }
 
     public bool ColourMatches(CrystalColour _colour)
@@ -130,4 +135,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        EnemyManager.Instance.ActiveEnemies.Remove(gameObject);
+    }
 }
