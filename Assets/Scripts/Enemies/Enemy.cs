@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
     private ColourMaterial bodyColour;
@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private MeshRenderer materialToReplace;
 
     private NavMeshAgent agent;
+    private Animator anim;
 
     [SerializeField]
     private int health = 1;
@@ -42,6 +43,9 @@ public class Enemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
+
+        anim = GetComponent<Animator>();
+
         aimingMask = LayerMask.GetMask("Default");
     }
 
@@ -69,6 +73,9 @@ public class Enemy : MonoBehaviour
         {
             PathTowardsPlayer();
         }
+
+        anim.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
+        anim.SetBool("Shooting", shooting);
 
         raycastTimer += Time.deltaTime;
         if(raycastTimer > raycastDelay)
@@ -145,11 +152,22 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (health < 1)
+            return;
+
         health -= 1;
         if(health < 1)
         {
-            Destroy(gameObject);
+            StartCoroutine(nameof(Die));
         }
+    }
+
+    private IEnumerator Die()
+    {
+        anim.SetTrigger("Die");
+        yield return null;
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        Destroy(gameObject);
     }
 
     private void OnDestroy()

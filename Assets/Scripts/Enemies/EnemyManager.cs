@@ -68,7 +68,6 @@ public class EnemyManager : MonoBehaviour
             SpawnWave();
         }
 
-        Debug.Log(GetRandomMaterial(colours[0]).colour);
     }
 
     public ColourMaterial GetRandomMaterial()
