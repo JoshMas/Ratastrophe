@@ -39,7 +39,7 @@ public class Weapon : ScriptableObject
             direction = direction.normalized;
         }
 
-        Bullet newBullet = Instantiate(bullet, _position, Quaternion.LookRotation(direction)).GetComponent<Bullet>();
+        EnemyBullet newBullet = Instantiate(bullet, _position, Quaternion.LookRotation(direction)).GetComponent<EnemyBullet>();
         newBullet.Speed = speed;
         newBullet.Lifetime = lifetime;
         newBullet.Colour = _colour;

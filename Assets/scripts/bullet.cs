@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 
-    public class Bullet : MonoBehaviour
+    public class Bullet: MonoBehaviour
     {
         [Tooltip("Time until the projectile expires.")]
         [SerializeField] private float timeToLive = 5f;
