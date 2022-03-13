@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba65e15e8f8fb844935bd00e6aa3d59, type: 3}
   m_Name: Auto
   m_EditorClassIdentifier: 
-  fireRate: 5
-  spread: 0.01
+  fireRate: 2
+  spread: 0.083
   bullet: {fileID: 7357823540866346744, guid: bddef0b632fec21429cdc498782ff4c8, type: 3}
-  speed: 5
-  lifetime: 5
+  speed: 20
+  lifetime: 20

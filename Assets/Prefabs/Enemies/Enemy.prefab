@@ -153,7 +153,7 @@ MonoBehaviour:
   weaponColourMatches: 1
   materialToReplace: {fileID: 4050587075016236994}
   health: 1
-  speed: 5
+  speed: 6
   weapon: {fileID: 11400000, guid: 42252ee1236710544b813550bd4c4fe6, type: 2}
   sightDistance: 15
   raycastDelay: 0.1

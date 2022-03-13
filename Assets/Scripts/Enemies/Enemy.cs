@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
     private float raycastDelay = .1f;
     private float raycastTimer = 0;
 
+    [SerializeField]
     private bool shooting = false;
     private float shotTimer;
     private bool waitingForPath = false;

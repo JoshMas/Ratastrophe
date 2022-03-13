@@ -153,9 +153,9 @@ MonoBehaviour:
   weaponColourMatches: 1
   materialToReplace: {fileID: 4050587075016236994}
   health: 3
-  speed: 3
+  speed: 5
   weapon: {fileID: 11400000, guid: 42252ee1236710544b813550bd4c4fe6, type: 2}
-  sightDistance: 10
+  sightDistance: 20
   raycastDelay: 0.1
 --- !u!136 &4050587075194659840
 CapsuleCollider:
