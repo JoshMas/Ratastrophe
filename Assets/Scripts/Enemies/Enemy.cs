@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
     private ColourMaterial bodyColour;
     private ColourMaterial weaponColour;
     [SerializeField]
     private bool weaponColourMatches = true;
-    [SerializeField]
-    private MeshRenderer materialToReplace;
+
+    private MeshRenderer meshRenderer;
+
+    private SkinnedMeshRenderer skinnedMeshRenderer;
 
     private NavMeshAgent agent;
     private Animator anim;
@@ -45,7 +47,10 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
 
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
+
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
         aimingMask = LayerMask.GetMask("Default");
     }
@@ -55,7 +60,14 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         SetColour();
-        materialToReplace.material = bodyColour.material;
+        if(meshRenderer != null)
+        {
+            meshRenderer.material = bodyColour.material;
+        }
+        else if(skinnedMeshRenderer != null)
+        {
+            skinnedMeshRenderer.material = bodyColour.material;
+        }
     }
 
     // Update is called once per frame
@@ -74,6 +86,8 @@ public class Enemy : MonoBehaviour
         {
             PathTowardsPlayer();
         }
+
+        transform.forward = agent.velocity.normalized;
 
         anim.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
         anim.SetBool("Shooting", shooting);
