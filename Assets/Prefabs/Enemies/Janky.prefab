@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 4050587075194659841}
   - component: {fileID: 4050587075194659847}
   - component: {fileID: 4050587075194659840}
+  - component: {fileID: -5465344591470833937}
   m_Layer: 21
   m_Name: Janky
   m_TagString: Untagged
@@ -170,3 +171,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &-5465344591470833937
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050587075194659846}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 658cc4ab72c222f48acdad89879416d7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
